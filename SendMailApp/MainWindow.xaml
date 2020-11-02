@@ -17,17 +17,25 @@
             <RowDefinition Height="34*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="84*"/>
-            <ColumnDefinition Width="155*"/>
+            <ColumnDefinition Width="71*"/>
+            <ColumnDefinition Width="421*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="32,29,0,0" Grid.Row="0" TextWrapping="Wrap" Text="件名:" VerticalAlignment="Top"  Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="32,19,0,0" Grid.Row="1" TextWrapping="Wrap" Text="To:" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="32,23,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Cc:" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="32,10,0,0" Grid.Row="3" TextWrapping="Wrap" Text="Bcc:" VerticalAlignment="Top" Width="120"/>
-        <TextBlock HorizontalAlignment="Left" Height="23" Margin="32,18,0,0" Grid.Row="4" TextWrapping="Wrap" Text="本文" VerticalAlignment="Top" Width="120"/>
-        <StackPanel HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Grid.Column="1" Margin="219,10,0,-45" Grid.Row="5">
-            <Button Name="キャンセル" VerticalAlignment="Bottom"/>
-            <Button Name="送信" VerticalAlignment="Bottom"/>
+        <!--テキスト-->
+        <TextBlock HorizontalAlignment="Right" Grid.Row="0" Text="件名:" VerticalAlignment="Top" FontSize="16" Margin="10"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="1" Text="To:" VerticalAlignment="Top"  FontSize="16" Margin="10" />
+        <TextBlock HorizontalAlignment="Right" Grid.Row="2" Text="Cc:" VerticalAlignment="Top"  FontSize="16" Margin="10"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="3" Text="Bcc:" VerticalAlignment="Top" FontSize="16" Margin="10"/>
+        <TextBlock HorizontalAlignment="Right" Grid.Row="4" Text="本文:" VerticalAlignment="Top" FontSize="16" Margin="10"/>
+        <!--本文-->
+        <TextBox x:Name="tbTitle" Grid.Row="0" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="tbto" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="tbCc" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="tbBcc" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="tbBody" Grid.Row="4" Grid.Column="1" Margin="5"/>
+        <!--ボタン-->
+        <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2"  Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="bt_Cansel" Content="キャンセル"  Margin="10" Width="80" Click="bt_Cansel_Click"/>
+            <Button x:Name="bt_Ok" Content="送信" Margin="10" Width="80" Click="bt_Ok_Click" />
         </StackPanel>
     </Grid>
 </Window>
