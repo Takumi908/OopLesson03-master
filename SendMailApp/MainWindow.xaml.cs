@@ -44,9 +44,22 @@ namespace SendMailApp
         {
             try
             {
-                MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbto.Text);
-                msg.CC.Add("ojsinfosys01@gmail.com");
-                msg.Bcc.Add("ojsinfosys01@gmail.com");
+                MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbto.Text,tbTitle.Text,tbBcc.Text);
+                // msg.To.Add(new MailAddress("recipient1@example.com"));
+
+
+                if (tbCc.Text != "") {
+                    //tbCc.Text.Split(',');
+                    msg.CC.Add(tbCc.Text);
+                } 
+                if (tbBcc.Text != "") {
+                  //  tbBcc.Text.Split(',');
+                    msg.Bcc.Add(tbBcc.Text);
+                }
+                   
+
+                 
+                
 
                 msg.Subject = tbTitle.Text; //件名    
                 msg.Body = tbBody.Text; //本文
@@ -57,7 +70,7 @@ namespace SendMailApp
                 sc.EnableSsl = true;
                 sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
 
-                sc.Send(msg); //送信
+                //sc.Send(msg); //送信
                 sc.SendMailAsync(msg);
             }
             catch (Exception ex)
