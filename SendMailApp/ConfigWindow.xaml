@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SendMailApp"
         mc:Ignorable="d"
-        Title="ConfigWindow" Height="650" Width="800">
+        Title="ConfigWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -31,17 +31,17 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="SMTPサーバー:" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBox x:Name="tbsmtp" Grid.Row="0" Grid.Column="1" Margin="5.20"/>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="ユーザー名" 
+                <TextBox x:Name="tbsmtp" Grid.Row="0" Grid.Column="1" Margin="5.20" Height="30"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="ユーザー名:" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBox x:Name="tbUserName" Grid.Row="1" Grid.Column="1" Margin="5.20"/>
+                <TextBox x:Name="tbUserName" Grid.Row="1" Grid.Column="1" Margin="5.20" Height="30"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="ポート番号:" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBox x:Name="Port" Grid.Row="0" Grid.Column="3" Margin="5.20"/>
+                <TextBox x:Name="tbPort" Grid.Row="0" Grid.Column="3" Margin="5.20" Height="30"/>
                 <TextBlock Grid.Row="1" Grid.Column="2" Text="パスワード:" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                <PasswordBox x:Name="tbPassWord" Grid.Row="1" Grid.Column="3" Margin="5,20"/>
+                <PasswordBox x:Name="tbPassWord" Grid.Row="1" Grid.Column="3" Margin="5,20" Height="30"/>
 
                 <CheckBox x:Name="cbssl" Grid.Row="3" Grid.Column="3" Content="SSL有効"
                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -63,10 +63,26 @@
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="送信元:" 
                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBox x:Name="tbSender" Grid.Row="1" Grid.Column="1" Margin="5"/>
+                <TextBox x:Name="tbSender" Grid.Row="1" Grid.Column="1" Margin="5" Height="30"/>
 
 
             </Grid>
         </GroupBox>
+        <Grid Grid.Row="2" >
+            <!--列-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel  Grid.Row="0" Orientation="Horizontal" >
+                <Button x:Name="btDefault" Content="初期値"  Margin="10" Width="75" Click="btDefault_Click"/>
+            </StackPanel>
+            <StackPanel  Grid.Column="1" Orientation="Horizontal"  >
+                <Button x:Name="btOK" Content="OK" Width="80" Margin="10" />
+                <Button x:Name="btCancel" Content="キャンセル" Width="80"  Margin="10" />
+                <Button x:Name="btApply" Content="適用" Width="80" Margin="10"  Click="btApply_Click"  />
+            </StackPanel>
+           
+        </Grid>
     </Grid>
 </Window>

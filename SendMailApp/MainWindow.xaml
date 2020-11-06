@@ -37,5 +37,6 @@
             <Button x:Name="bt_Cansel" Content="キャンセル"  Margin="10" Width="80" Click="bt_Cansel_Click"/>
             <Button x:Name="bt_Ok" Content="送信" Margin="10" Width="80" Click="bt_Ok_Click" />
         </StackPanel>
+        <Button x:Name="btConfig" Grid.Row="5" Margin="10" Content="設定" Click="btConfig_Click"/>
     </Grid>
 </Window>

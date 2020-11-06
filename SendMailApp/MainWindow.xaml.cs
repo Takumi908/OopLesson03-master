@@ -80,7 +80,7 @@ namespace SendMailApp
 
 
         }
-        //送信キャンセル
+        //送信キャンセル処理
         private  void bt_Cansel_Click(object sender, RoutedEventArgs e)
         {
             if (sc!=null) {
@@ -88,6 +88,10 @@ namespace SendMailApp
             }
            
         }
-       
+        //設定画面表示
+        private void btConfig_Click(object sender, RoutedEventArgs e) {
+            ConfigWindow configWindow = new ConfigWindow();
+            configWindow.ShowDialog(); //閉じるまで操作ができないモーダル
+        }
     }
 }
