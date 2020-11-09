@@ -18,6 +18,7 @@ namespace SendMailApp {
     /// ConfigWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class ConfigWindow : Window {
+
         public ConfigWindow() {
             InitializeComponent();
         }
@@ -28,7 +29,7 @@ namespace SendMailApp {
             //Config defaultDate =  cf.getDefaultStatus();
             tbsmtp.Text = cf.Smtp;
             tbPort.Text = cf.Port.ToString();
-            tbUserName.Text = cf.MailAddress;
+            tbUserName.Text = tbSender.Text =cf.MailAddress;
             tbPassWord.Password = cf.PassWord;
             cbssl.IsChecked = cf.Ssl;
         }
@@ -40,6 +41,28 @@ namespace SendMailApp {
                cbssl.IsChecked ?? false,
                tbPassWord.Password,
                tbUserName.Text);
-        }       
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            Config cf = (Config.GetInstace()).getStatus();
+            
+            tbsmtp.Text = cf.Smtp;
+            tbPort.Text = cf.Port.ToString();
+            tbUserName.Text = tbSender.Text = cf.MailAddress;
+            tbPassWord.Password = cf.PassWord;
+            cbssl.IsChecked = cf.Ssl;
+            
+        }
+
+        //OK
+        private void btOK_Click(object sender, RoutedEventArgs e) {
+            btApply_Click(sender,e);
+            this.Close();
+        }
+
+        //キャンセル
+        private void btCancel_Click(object sender, RoutedEventArgs e) {
+            this.Close();
+        }
     }
 }

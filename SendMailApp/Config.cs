@@ -52,14 +52,25 @@ namespace SendMailApp {
 
         //設定データ更新
         //  public bool  UpdateStatus(Config cf) {
-        public bool UpdateStatus(string smtp, int Port, bool Ssl, String
-                                                      PassWord, String MailAddress) { 
-            this.Smtp = Smtp;
-            this.Port = Port;
-            this.Ssl = Ssl;
-            this.PassWord = PassWord;
-            this.MailAddress = MailAddress;
+        public bool UpdateStatus(string smtp, int port, bool ssl, String
+                                                      passWord, String mailAddress) {
+            this.Smtp = smtp;
+            this.Port = port;
+            this.Ssl = ssl;
+            this.PassWord = passWord;
+            this.MailAddress = mailAddress;
             return true;
+        }
+
+        public Config getStatus() {
+            Config obj = new Config {
+                Smtp = this.Smtp,
+                MailAddress = this.MailAddress,
+                PassWord = this.PassWord,
+                Port = this.Port,
+                Ssl = this.Ssl,
+            };
+            return obj;
         }
     }
 }
