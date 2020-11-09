@@ -86,7 +86,13 @@ namespace SendMailApp
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-
+            Config.GetInstace().DeSerialise();//逆シリアル化　XML⇒オブジェクト
         }
+
+        /*
+        private void Window_Closed(object sender, EventArgs e) {
+            Config.GetInstace().Serialise(); //シリアル化　オブジェクト⇒XML
+        }
+        */
     }
 }

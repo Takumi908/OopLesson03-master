@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace SendMailApp {
     public class Config {
@@ -72,5 +75,26 @@ namespace SendMailApp {
             };
             return obj;
         }
+        //シリアル化
+        public void Serialise() {
+            Config cf = Config.GetInstace();
+
+            using (var mailText = XmlWriter.Create("obj.xml")) {
+                var serializer = new XmlSerializer(cf.GetType());
+                serializer.Serialize(mailText, cf);
+            }
+        }
+
+        //逆シリアル化
+        public void DeSerialise() {
+            Config cf = Config.GetInstace();
+            var objstream = cf.ToString();
+            using (var reader = XmlReader.Create(new StringReader(objstream))) {
+                var serializer = new XmlSerializer(typeof(Config));
+                var config = serializer.Deserialize(reader) as Config;
+                Console.WriteLine(config);
+            }
+        }
     }
 }
+
