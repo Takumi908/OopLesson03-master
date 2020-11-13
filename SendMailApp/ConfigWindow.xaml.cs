@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
 namespace SendMailApp {
     /// <summary>
     /// ConfigWindow.xaml の相互作用ロジック
@@ -23,7 +24,9 @@ namespace SendMailApp {
             InitializeComponent();
         }
         //初期値設定
-        
+
+        public bool flag ;
+
         public void btDefault_Click(object sender, RoutedEventArgs e) {
             Config cf = (Config.GetInstace()).getDefaultStatus();
             //Config defaultDate =  cf.getDefaultStatus();
@@ -35,12 +38,14 @@ namespace SendMailApp {
         }
         //適用(更新)
         private void btApply_Click(object sender, RoutedEventArgs e) {
-            (Config.GetInstace()).UpdateStatus(
-               tbsmtp.Text,
-               int.Parse(tbPort.Text),
-               cbssl.IsChecked ?? false,
-               tbPassWord.Password,
-               tbUserName.Text);
+            flag = false;
+                (Config.GetInstace()).UpdateStatus(
+                   tbsmtp.Text,
+                   int.Parse(tbPort.Text),
+                   cbssl.IsChecked ?? false,
+                   tbPassWord.Password,
+                   tbUserName.Text);
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
@@ -56,13 +61,45 @@ namespace SendMailApp {
 
         //OK
         private void btOK_Click(object sender, RoutedEventArgs e) {
-            btApply_Click(sender,e);
-            this.Close();
+            if (NullCheck()) {
+                System.Windows.MessageBox.Show("空欄があります");            
+            } else {
+                btApply_Click(sender,e );
+                this.Close();
+            }
+        }
+
+        private bool NullCheck() {
+            if (tbPassWord.Password == "" ||
+                tbPort.Text == "" ||
+                tbSender.Text == "" ||
+                tbsmtp.Text == "" ||
+                tbUserName.Text == "") {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         //キャンセル
         private void btCancel_Click(object sender, RoutedEventArgs e) {
-            this.Close();
+            if (flag == true) {
+                MessageBoxResult result = MessageBox.Show("変更が反映されていません",
+                 "エラー", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK) {
+                    this.Close();
+                }
+            } else {
+             this.Close();
+            }
+        }
+
+        private void TextChanged(object sender, TextChangedEventArgs e) {
+            flag = true;
+        }
+
+        private void tbPassWord_PasswordChanged(object sender, RoutedEventArgs e) {
+            flag = true;
         }
     }
 }

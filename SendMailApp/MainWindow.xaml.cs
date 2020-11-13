@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -29,7 +30,7 @@ namespace SendMailApp
             InitializeComponent();
             sc.SendCompleted += Sc_SendCompleted;
         }
-
+        
         //送信完了イベント
         private void Sc_SendCompleted(object sender,System.ComponentModel.AsyncCompletedEventArgs e) {
             if (e.Cancelled) {
@@ -84,15 +85,29 @@ namespace SendMailApp
             ConfigWindow configWindow = new ConfigWindow();
             configWindow.ShowDialog(); //閉じるまで操作ができないモーダル
         }
-
+           
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            Config.GetInstace().DeSerialise();//逆シリアル化　XML⇒オブジェクト
+            try {
+                Config.GetInstace().DeSerialise();//逆シリアル化　XML⇒オブジェクト
+            }
+            catch (FileNotFoundException) {
+                ConfigWindow configWindow = new ConfigWindow();
+                configWindow.ShowDialog(); //閉じるまで操作ができないモーダル
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }           
         }
 
-        /*
+        
         private void Window_Closed(object sender, EventArgs e) {
-            Config.GetInstace().Serialise(); //シリアル化　オブジェクト⇒XML
+            try {
+                Config.GetInstace().Serialise(); //シリアル化　オブジェクト⇒XML
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+            this.Close();
         }
-        */
     }
 }

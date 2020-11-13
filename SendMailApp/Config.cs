@@ -77,24 +77,21 @@ namespace SendMailApp {
         }
         //シリアル化
         public void Serialise() {
-            Config cf = Config.GetInstace();
 
             using (var mailText = XmlWriter.Create("obj.xml")) {
-                var serializer = new XmlSerializer(cf.GetType());
-                serializer.Serialize(mailText, cf);
+                var serializer = new XmlSerializer(Instance.GetType());
+                serializer.Serialize(mailText, Instance);
             }
         }
 
         //逆シリアル化
         public void DeSerialise() {
-            Config cf = Config.GetInstace();
-            var objstream = cf.ToString();
-            using (var reader = XmlReader.Create(new StringReader(objstream))) {
+
+
+            using (var reader = XmlReader.Create("obj.xml")) {
                 var serializer = new XmlSerializer(typeof(Config));
-                var config = serializer.Deserialize(reader) as Config;
-                Console.WriteLine(config);
+                Instance = serializer.Deserialize(reader) as Config;
             }
         }
     }
 }
-
