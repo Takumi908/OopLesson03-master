@@ -30,7 +30,7 @@ namespace SendMailApp
             InitializeComponent();
             sc.SendCompleted += Sc_SendCompleted;
         }
-        
+        public bool flag;
         //送信完了イベント
         private void Sc_SendCompleted(object sender,System.ComponentModel.AsyncCompletedEventArgs e) {
             if (e.Cancelled) {
