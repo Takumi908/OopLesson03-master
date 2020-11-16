@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -25,6 +27,7 @@ namespace SendMailApp {
         public string PassWord { get; set; }    //パスワード
         public int Port { get; set; }   //ポート番号
         public bool Ssl { get; set; }　  //SSL設定
+    
 
 
         //コンストラクタ(new禁止)
@@ -61,7 +64,7 @@ namespace SendMailApp {
             this.Port = port;
             this.Ssl = ssl;
             this.PassWord = passWord;
-            this.MailAddress = mailAddress;
+            this.MailAddress = mailAddress;          
             return true;
         }
 
@@ -86,7 +89,6 @@ namespace SendMailApp {
 
         //逆シリアル化
         public void DeSerialise() {
-
 
             using (var reader = XmlReader.Create("obj.xml")) {
                 var serializer = new XmlSerializer(typeof(Config));

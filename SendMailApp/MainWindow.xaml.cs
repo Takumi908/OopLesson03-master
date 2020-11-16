@@ -11,11 +11,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.MessageBox;
 
 namespace SendMailApp
 {
@@ -41,22 +43,37 @@ namespace SendMailApp
         }
 
         //送信する
-        private void bt_Ok_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        private void bt_Ok_Click(object sender, RoutedEventArgs e) {
+            try {
                 Config cf = (Config.GetInstace()).getStatus();
-                MailMessage msg = new MailMessage(cf.MailAddress, tbto.Text);
+                MailMessage msg = new MailMessage(cf.MailAddress, tbTo.Text);
 
-                if (tbCc.Text != "") {         
+                if (tbCc.Text != "") {
                     msg.CC.Add(tbCc.Text);
-                } 
+                }
                 if (tbBcc.Text != "") {
                     msg.Bcc.Add(tbBcc.Text);
                 }
+                if (tbTo.Text != "") {
+                    MessageBoxResult result = MessageBox.Show("件名が入力されいてません",
+                 "エラー", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK) {
+                        //sc.SendMailAsync(msg);
+                    }
+                }
 
-               msg.Subject = tbTitle.Text; //件名    
-               msg.Body = tbBody.Text; //本文
+                if (tbFile != null) {
+
+                    foreach (var item in tbFile.Items) {
+                        Attachment data = new Attachment(item.ToString());
+                        msg.Attachments.Add(data);
+                    }
+
+                }
+
+
+                msg.Subject = tbTitle.Text; //件名    
+                msg.Body = tbBody.Text; //本文
                 sc.Host = cf.Smtp; //SMTPサーバーの設定
                 sc.Port = cf.Port;//ポート番号
                 sc.EnableSsl = cf.Ssl;
@@ -65,12 +82,9 @@ namespace SendMailApp
                 //sc.Send(msg); //送信
                 sc.SendMailAsync(msg);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
-
-
         }
         //送信キャンセル処理
         private  void bt_Cansel_Click(object sender, RoutedEventArgs e)
@@ -85,7 +99,7 @@ namespace SendMailApp
             ConfigWindow configWindow = new ConfigWindow();
             configWindow.ShowDialog(); //閉じるまで操作ができないモーダル
         }
-           
+        //ロードしたときに実行
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             try {
                 Config.GetInstace().DeSerialise();//逆シリアル化　XML⇒オブジェクト
@@ -99,7 +113,7 @@ namespace SendMailApp
             }           
         }
 
-        
+        //閉じたときに実行
         private void Window_Closed(object sender, EventArgs e) {
             try {
                 Config.GetInstace().Serialise(); //シリアル化　オブジェクト⇒XML
@@ -108,6 +122,23 @@ namespace SendMailApp
                 MessageBox.Show(ex.Message);
             }
             this.Close();
+        }
+        //添付ファイル追加
+        private void btAdd_Click(object sender, RoutedEventArgs e) {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                tbFile.Items.Add(ofd.FileName);
+                
+            }
+
+           
+        }
+        //ファイル削除
+        private void btDelete_Click(object sender, RoutedEventArgs e) {
+
+            if(tbFile.SelectedIndex != -1) {
+                tbFile.Items.RemoveAt(tbFile.SelectedIndex);
+            }
         }
     }
 }
