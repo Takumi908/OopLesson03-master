@@ -58,8 +58,8 @@ namespace SendMailApp
                     MessageBoxResult result = MessageBox.Show("件名が入力されいてません",
                  "エラー", MessageBoxButton.OKCancel);
                     if (result == MessageBoxResult.OK) {
-                        //sc.SendMailAsync(msg);
-                    }
+                        sc.SendMailAsync(msg);
+                    } 
                 }
 
                 if (tbFile != null) {
@@ -80,7 +80,10 @@ namespace SendMailApp
                 sc.Credentials = new NetworkCredential(cf.MailAddress, cf.PassWord);
 
                 //sc.Send(msg); //送信
-                sc.SendMailAsync(msg);
+                
+                if (tbTo.Text == "" && tbTitle.Text == "" && tbBody.Text == "") {
+                    sc.SendMailAsync(msg);
+                }
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
