@@ -45,32 +45,9 @@ namespace SendMailApp
         //送信する
         private void bt_Ok_Click(object sender, RoutedEventArgs e) {
             try {
+
                 Config cf = (Config.GetInstace()).getStatus();
                 MailMessage msg = new MailMessage(cf.MailAddress, tbTo.Text);
-
-                if (tbCc.Text != "") {
-                    msg.CC.Add(tbCc.Text);
-                }
-                if (tbBcc.Text != "") {
-                    msg.Bcc.Add(tbBcc.Text);
-                }
-                if (tbTo.Text != "") {
-                    MessageBoxResult result = MessageBox.Show("件名が入力されいてません",
-                 "エラー", MessageBoxButton.OKCancel);
-                    if (result == MessageBoxResult.OK) {
-                        sc.SendMailAsync(msg);
-                    } 
-                }
-
-                if (tbFile != null) {
-
-                    foreach (var item in tbFile.Items) {
-                        Attachment data = new Attachment(item.ToString());
-                        msg.Attachments.Add(data);
-                    }
-
-                }
-
 
                 msg.Subject = tbTitle.Text; //件名    
                 msg.Body = tbBody.Text; //本文
@@ -79,11 +56,34 @@ namespace SendMailApp
                 sc.EnableSsl = cf.Ssl;
                 sc.Credentials = new NetworkCredential(cf.MailAddress, cf.PassWord);
 
-                //sc.Send(msg); //送信
+                if (tbCc.Text != "") {
+                    msg.CC.Add(tbCc.Text);
+                }
+                if (tbBcc.Text != "") {
+                    msg.Bcc.Add(tbBcc.Text);
+                }
+                if (tbTitle.Text == "") {
+                    MessageBoxResult result = MessageBox.Show("件名が入力されいてません",
+                 "エラー", MessageBoxButton.OKCancel);
+                    if (result == MessageBoxResult.OK) {
+                        sc.SendMailAsync(msg);
+                    } 
+                }
+                if (tbFile != null) {
+
+                    foreach (var item in tbFile.Items) {
+                        Attachment data = new Attachment(item.ToString());
+                        msg.Attachments.Add(data);
+                    }
+                }
+
+              // sc.SendMailAsync(msg); //送信
+
                 
-                if (tbTo.Text == "" && tbTitle.Text == "" && tbBody.Text == "") {
+                if (tbTo.Text != "" && tbBody.Text != "" && tbTitle.Text !="") {
                     sc.SendMailAsync(msg);
                 }
+                
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message);
